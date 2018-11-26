@@ -30,10 +30,11 @@ namespace SWProjv1
             
             String mbTitle = "";
             String mbMessage = "";
-            if (name_inp.Text != "" && stdNum_inp.Text != "")
+			if (name_inp.Text != "" && stdNum_inp.Text != "" && lname_inp.Text != "" && otherName.Text != "" && schoolYear.Text != "" && gender.Text != "" && email.Text != "" && streetAddress.Text != "" && city.Text != "" && region.Text != "" && postalCode.Text != "" && phoneCountryCode.Text != "" && phoneAreaCode.Text != "" && phoneNumber.Text != "" && preferedBuilding.Text != "" && smokes.Text != "" && liveWithSmoke.Text != "" && drinks.Text != "" && marijuana.Text != "" && liveWithMarijuana.Text != "" && socialLevel.Text != "" && bedtime.Text != "" && wakeUp.Text != "" && volumeLevel.Text != "" && overnightVisitors.Text != "" && cleanliness.Text != "" && studyInRoom.Text != "" && mealPlan.Text != "")
             {
-             mbTitle = "Success!";
-             mbMessage = "Application Successful! :)";
+				Server.Executer("EXEC SubmitApplication '"+stdNum_inp.Text+"', '"+name_inp.Text+"', '"+lname_inp.Text+"', '"+otherName.Text+"', "+schoolYear.Text+", '"+gender.Text+"', '"+email.Text+"', '"+streetAddress.Text+"', '"+city.Text+"', '"+region.Text+"', '"+country.Text+"', '"+postalCode.Text+"', '"+phoneCountryCode.Text+"', '"+phoneAreaCode.Text+"', '"+phoneNumber.Text+"', '"+preferedBuilding.Text+"', "+smokes.Text+", "+liveWithSmoke.Text+", "+drinks.Text+", "+liveWithDrink.Text+", "+marijuana.Text+", "+liveWithMarijuana.Text+", '"+socialLevel.Text+"', '"+bedtime.Text+"', '"+wakeUp.Text+"', '"+volumeLevel.Text+"', "+overnightVisitors.Text+", '"+cleanliness.Text+"', "+studyInRoom.Text+","+roomateRequest.Text+",'"+roomateName.Text+"','"+roomateStudentNum.Text+"','"+mealPlan.Text+"'");
+				mbTitle = "Success!";
+				mbMessage = "Application Successful! :)";
             }
             else
             {

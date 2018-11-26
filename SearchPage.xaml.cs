@@ -23,17 +23,14 @@ namespace SWProjv1
     /// </summary>
     public partial class SearchPage : Page
     {
-        public String type;
+        String type;
         public SearchPage(String type)
         {
             try
             {
                 Server.Init();
             }
-            catch (Exception e)
-            {
-                
-            }
+            catch (Exception e) { }
             InitializeComponent();
             this.type = type;
             type_txt.Text = type+"s";
@@ -41,54 +38,59 @@ namespace SWProjv1
 
         private void search_btn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+
+			try
+			{
                 Server.setCommand(type, "");
-                List<ListBoxItem> ll = Server.runQuery("SWProjv1." + type);
-                searchItems.ItemsSource = ll;
-                foreach(ListBoxItem litem in ll)
+                List<ListBoxItem> listy = Server.runQuery("SWProjv1." + type);
+				foreach (ListBoxItem lbi in listy)
                 {
-                    litem.PreviewMouseDown += listboxtouch;
+                    lbi.PreviewMouseDown += Item_PreviewMouseDown2;
                 }
+                searchItems.ItemsSource = listy;
             }
             catch (Exception exceptyone)
             {
-                searchText_test.Text = exceptyone.ToString();
-            }
+				MessageBox.Show(exceptyone.ToString());
+				//searchText_test.Text = exceptyone.ToString();
+			}
         }
-        public void listboxtouch(object sender, RoutedEventArgs e)
+
+        private void Item_PreviewMouseDown2(object sender, MouseButtonEventArgs e)
         {
-            searchText_test.Text = "";
-            String[] splitter = ((ListBoxItem)sender).Content.ToString().Split();
-            SqlDataReader red = Server.run_query("SELECT buildingLocation, roomSide, building, mailingAddress, phoneNumber, Room.roomID, studentID, dateEntered, dateLeft, furnitureName, serialNumber FROM Room, RoomHistory, Furniture  WHERE Room.buildingLocation = '" + splitter[0] +  "' AND Room.roomSide = '" + splitter[1] + "' AND Room.building = '" + splitter[2] + "'  AND Room.roomID = RoomHistory.roomID AND Room.roomID = Furniture.roomID;");
-            bool firstRun = false;
-            while (red.Read())
+            //searchItem = Room.selectedRoom.grid;
+            //searchItem.Visibility=Visibility.Visible;
+            try
             {
-                if (!firstRun)
+
+				Grid searchItem;
+                switch (type)
                 {
-                    searchText_test.Text +=
-                        red.GetString(0) + "\n" +
-                        red.GetString(1) + "\n" +
-                        red.GetString(2) + "\n" +
-                        red.GetString(3) + "\n" +
-                        red.GetString(4) + "\n" +
-                        red.GetString(5) + "\n" +
-                        red.GetString(6) + "\n" +
-                        red.GetDateTime(7).ToString() + "\n" +
-                        red.GetDateTime(8).ToString() + "\n\n FURNITURE \n" +
-                        red.GetString(9) + "\t\t" +
-                        red.GetString(10) + "\n";
+                    case "Room":
+                        searchItem = Room.selectedRoom.grid;
+                        break;
+                    case "Student":
+                        searchItem = Student.selectedStudent.grid;
+                        break;
+					case "Message":
+						searchItem = Message.selectedMessage.grid;
+						break;
+					case "TempKey":
+						searchItem = TempKey.selectedKey.grid;
+						break;
+					default:
+                        searchItem = new Grid();
+                        break;
                 }
-                else
-                {
-                    searchText_test.Text +=
-                        red.GetString(9) + "\t\t" +
-                        red.GetString(10) + "\n";
-                }
-                firstRun = true;
+                Grid.SetColumn(searchItem, 1);
+                Grid.SetRow(searchItem, 3);
+				if (grid.Children.Count > 4)
+					grid.Children.RemoveAt(grid.Children.Count-1);
+				grid.Children.Add(searchItem);
             }
-           // searchItem.Children.Add(addFurny);
-            red.Close();
+            catch (Exception) {
+
+			}
         }
     }
 }

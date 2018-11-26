@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,10 +31,8 @@ namespace SWProjv1
             String mbMessage = "";
             if (name_inp.Text != "" && stdNum_inp.Text != "" && building_inp.Text != "" && room_inp.Text != "")
             {
-                /*Execute Procedure Send Key Request*/
                 mbTitle = "Success!";
                 mbMessage = "Request Submitted";
-                Server.run_query("EXEC SendTempKeyRequest '" + name_inp.Text + "', '" + stdNum_inp.Text + "', '" + building_inp.Text + "', '" + room_inp.Text + "', 'N/A'" );
             }
             else
             {

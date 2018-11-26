@@ -24,6 +24,7 @@ namespace SWProjv1
         {
             InitializeComponent();
         }
+
         private void roomSearch_btn_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new SearchPage("Room"));
