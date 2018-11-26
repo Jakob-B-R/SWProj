@@ -29,7 +29,12 @@
                     <TextBlock Text="School Year"/>
                     <TextBox Name="schoolYear"/>
                     <TextBlock Text="Gender"/>
-                    <TextBox Name="gender"/>
+                    <ComboBox Name="gender">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Male"/>
+                        <ComboBoxItem Content="Female"/>
+                        <ComboBoxItem Content="Other"/>
+                    </ComboBox>
                     <TextBlock Text="Email Address"/>
                     <TextBox Name="email"/>
                     <TextBlock Text="Street Address"/>
@@ -51,17 +56,41 @@
                     <TextBlock Text="Preferred Building"/>
                     <TextBox Name="preferedBuilding"/>
                     <TextBlock Text="Smokes"/>
-                    <TextBox Name="smokes"/>
+                    <ComboBox Name="smokes">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="Can Live With Smoker"/>
-                    <TextBox Name="liveWithSmoke"/>
+                    <ComboBox Name="liveWithSmoke">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="Do You Drink"/>
-                    <TextBox Name="drinks"/>
+                    <ComboBox Name="drinks">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="Can Live With Drinks"/>
-                    <TextBox Name="liveWithDrink"/>
+                    <ComboBox Name="liveWithDrink">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="Do you smoke/use marijuana?"/>
-                    <TextBox Name="marijuana"/>
+                    <ComboBox Name="marijuana">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="Can You live with people who use marijuana?"/>
-                    <TextBox Name="liveWithMarijuana"/>
+                    <ComboBox Name="liveWithMarijuana">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="How Social Are You?"/>
                     <TextBox Name="socialLevel"/>
                     <TextBlock Text="When Do You Normally Go To Bed?"/>
@@ -71,17 +100,29 @@
                     <TextBlock Text="How Loud Are You?"/>
                     <TextBox Name="volumeLevel"/>
                     <TextBlock Text="Will You Host Overnight Visitors?"/>
-                    <TextBox Name="overnightVisitors"/>
+                    <ComboBox Name="overnightVisitors">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="How Clean Are You?"/>
                     <TextBox Name="cleanliness"/>
                     <TextBlock Text="Will You Often Study In Your Room?"/>
-                    <TextBox Name="studyInRoom"/>
+                    <ComboBox Name="studyInRoom">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
+                    <TextBlock Text="Do You Have A Roomate Request?"/>
+                    <ComboBox Name="roomateRequest">
+                        <ComboBoxItem Content="" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                     <TextBlock Text="If You Have A Roomate In Mind, Enter Their Student Number"/>
                     <TextBox Name="roomateStudentNum"/>
                     <TextBlock Text="If You Have A Roomate In Mind, Enter Their Name"/>
                     <TextBox Name="roomateName"/>
-                    <TextBlock Text="If You Have A Roomate In Mind, Enter Their ??????"/>
-                    <TextBox Name="roomateRequest"/>
                     <TextBlock Text="What Meal Plan Do You Want?"/>
                     <TextBox Name="mealPlan"/>
                     <Button Name="submit_btn" Content="Submit Form" Click="submit_btn_Click"/>

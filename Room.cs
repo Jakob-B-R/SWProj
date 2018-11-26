@@ -43,7 +43,7 @@ namespace SWProjv1
 
         private void Item_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            selectedRoom = new Room(roomID, roomSide, building, phoneNumber, mailing, roomNum);
+			selectedRoom = this;
             selectedRoom.grid = grid;
         }
 

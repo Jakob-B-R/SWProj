@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SWProjv1
@@ -34,7 +35,7 @@ namespace SWProjv1
             else if (type.Equals("Student"))
                 command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID";
 			else if (type.Equals("Message"))
-				command.CommandText = "SELECT * FROM Message WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID);";
+				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
 			else if (type.Equals("TempKey"))
 				command.CommandText = "SELECT * FROM TempKey";
 			else if (type.Equals("RAApplication"))
@@ -86,7 +87,19 @@ namespace SWProjv1
 						student.setListBoxItem();
 						results.Add(student.listboxitem);
                         break;
-                }
+					case "SWProjv1.Message":
+						Message message = new Message(
+							reader.GetString(1).Trim(),
+							reader.GetString(2).Trim(),
+							reader.GetString(3).Trim(),
+							reader.GetDateTime(4).ToString().Trim(),
+							reader.GetString(8).Trim() + " " +  reader.GetString(9).Trim()
+							);
+						MessageBox.Show(reader.GetString(8).Trim() + " " + reader.GetString(9).Trim());
+						message.setListBoxItem();
+						results.Add(message.listboxitem);
+						break;
+				}
             }
             reader.Close();
             return results;
