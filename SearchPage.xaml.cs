@@ -58,16 +58,9 @@ namespace SWProjv1
         }
         public void listboxtouch(object sender, RoutedEventArgs e)
         {
-            /*searchItem.Children.Clear();
-            searchItem.Children.Add(searchText_test);
-            Button addFurny = new Button();
-            addFurny.Width = 50;
-            addFurny.Height = 50;
-            addFurny.Content = "+";*/
             searchText_test.Text = "";
             String[] splitter = ((ListBoxItem)sender).Content.ToString().Split();
             SqlDataReader red = Server.run_query("SELECT buildingLocation, roomSide, building, mailingAddress, phoneNumber, Room.roomID, studentID, dateEntered, dateLeft, furnitureName, serialNumber FROM Room, RoomHistory, Furniture  WHERE Room.buildingLocation = '" + splitter[0] +  "' AND Room.roomSide = '" + splitter[1] + "' AND Room.building = '" + splitter[2] + "'  AND Room.roomID = RoomHistory.roomID AND Room.roomID = Furniture.roomID;");
-            //problems if no roomhistory
             bool firstRun = false;
             while (red.Read())
             {
