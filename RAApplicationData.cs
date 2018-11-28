@@ -10,31 +10,25 @@ using System.Windows.Input;
 namespace SWProjv1
 {
 
-	public class Message
+	public class RAApplicationData
 	{
-		/*
-		 * TODO://Allow reply
-		 * 
-		 */
-		public static Message selectedMessage { get; set; }
-		public String Text { get; set; }
-		public String senderID { get; set; }
-		public String recieverID { get; set; }
-		public String dateSent { get; set; }
-		public Grid grid;
-		public String senderName { get; set; }
+		public static RAApplicationData selectedApplication { get; set; }
+		public ListBoxItem listboxitem { get; set; }
+		public Grid grid { get; set; }
+		public String Name { get; set; }
 		public Button accept { get; set; }
-		public String mID { get; set; }
-		public ListBoxItem listboxitem;
-		public bool messageAcknowledged { get; set; }
-		public Message(String Text, String senderID, String recieverID, String dateSent, String senderName, String mID)
+		public Button Deny { get; set; }
+		public Boolean isAck { get; set; }
+		public Boolean isAcc { get; set; }
+		public int ID { get; set; }
+		public String stuID {get; set;}
+		public RAApplicationData(String name, Boolean isAck, Boolean isAcc, int ID, String stuID)
 		{
-			this.mID = mID;
-			this.Text = Text;
-			this.senderID = senderID;
-			this.recieverID = recieverID;
-			this.dateSent = dateSent;
-			this.senderName = senderName;
+			this.stuID = stuID;
+			this.Name = name;
+			this.isAck = isAck;
+			this.isAcc = isAcc;
+			this.ID = ID;
 			grid = new Grid();
 			grid.RowDefinitions.Add(new RowDefinition());
 			grid.RowDefinitions.Add(new RowDefinition());
@@ -49,30 +43,43 @@ namespace SWProjv1
 			accept.Height = 30;
 			Grid.SetRow(accept, 1);
 			Grid.SetColumn(accept, 0);
+			Deny = new Button();
+			Deny.Height = 30;
+			Deny.Content = "Deny";
+			Grid.SetRow(Deny, 2);
+			Grid.SetColumn(Deny, 0);
 			TextBox textbox = new TextBox();
 			Grid.SetRow(textbox, 0);
 			Grid.SetColumn(textbox, 0);
 			textbox.TextWrapping = System.Windows.TextWrapping.Wrap;
-			textbox.Text = Text;
+			textbox.Text = Name;
 			grid.Children.Add(textbox);
 			grid.Children.Add(accept);
+			grid.Children.Add(Deny);
 		}
 		private void Item_PreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
-			selectedMessage = this;
-			selectedMessage.grid = grid;
+			selectedApplication = this;
+			selectedApplication.grid = grid;
 		}
 		public void setListBoxItem()
 		{
 			listboxitem = new ListBoxItem();
-			listboxitem.Content = this.senderName;
+			listboxitem.Content = this.Name;
 			listboxitem.PreviewMouseDown += Item_PreviewMouseDown;
 			accept.Click += accept_click;
+			Deny.Click += deny_click;
+		}
+
+		private void deny_click(object sender, RoutedEventArgs e)
+		{
+			Server.Executer("UPDATE RAApplication SET isAcknowledged = 1, isAccepted = 0 WHERE RAApplicationID = " + ID.ToString());
 		}
 
 		private void accept_click(object sender, RoutedEventArgs e)
 		{
-			Server.Executer("UPDATE Message SET messageAcknowledge = 1 WHERE messageID = '" + mID +"'");
+			Server.Executer("UPDATE RAApplication SET isAcknowledged = 1, isAccepted = 1 WHERE RAApplicationID = " + ID.ToString());
+			Server.Executer("INSERT INTO RA VALUES('" + stuID + "', '" + stuID + "')");
 		}
 	}
 }

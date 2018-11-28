@@ -32,11 +32,18 @@ namespace SWProjv1
             }
             catch (Exception e) { }
             InitializeComponent();
-            this.type = type;
-            type_txt.Text = type+"s";
-        }
+			CreateButton.Click += newmessage_click;
 
-        private void search_btn_Click(object sender, RoutedEventArgs e)
+			this.type = type;
+            type_txt.Text = type+"s";
+			if (type == "Message")
+				CreateButton.Visibility = Visibility.Visible;
+			else
+				CreateButton.Visibility = Visibility.Hidden;
+
+		}
+
+		private void search_btn_Click(object sender, RoutedEventArgs e)
         {
 
 			try
@@ -48,8 +55,10 @@ namespace SWProjv1
                     lbi.PreviewMouseDown += Item_PreviewMouseDown2;
                 }
                 searchItems.ItemsSource = listy;
-            }
-            catch (Exception exceptyone)
+
+
+			}
+			catch (Exception exceptyone)
             {
 				MessageBox.Show(exceptyone.ToString());
 				//searchText_test.Text = exceptyone.ToString();
@@ -58,13 +67,12 @@ namespace SWProjv1
 
         private void Item_PreviewMouseDown2(object sender, MouseButtonEventArgs e)
         {
-            //searchItem = Room.selectedRoom.grid;
             //searchItem.Visibility=Visibility.Visible;
             try
             {
 
 				Grid searchItem;
-                switch (type)
+				switch (type)
                 {
                     case "Room":
                         searchItem = Room.selectedRoom.grid;
@@ -75,8 +83,11 @@ namespace SWProjv1
 					case "Message":
 						searchItem = Message.selectedMessage.grid;
 						break;
-					case "TempKey":
+					case "Key":
 						searchItem = TempKey.selectedKey.grid;
+						break;
+					case "RA Application":
+						searchItem = RAApplicationData.selectedApplication.grid;
 						break;
 					default:
                         searchItem = new Grid();
@@ -84,7 +95,7 @@ namespace SWProjv1
                 }
                 Grid.SetColumn(searchItem, 1);
                 Grid.SetRow(searchItem, 3);
-				if (grid.Children.Count > 4)
+				while (grid.Children.Count > 4)
 					grid.Children.RemoveAt(grid.Children.Count-1);
 				grid.Children.Add(searchItem);
             }
@@ -92,5 +103,9 @@ namespace SWProjv1
 
 			}
         }
-    }
+
+		private void newmessage_click(object sender, RoutedEventArgs e)
+		{
+		}
+	}
 }

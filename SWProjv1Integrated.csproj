@@ -66,6 +66,7 @@
     <Compile Include="RAApplication.xaml.cs">
       <DependentUpon>RAApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RAApplicationData.cs" />
     <Compile Include="ResApplication.xaml.cs">
       <DependentUpon>ResApplication.xaml</DependentUpon>
     </Compile>

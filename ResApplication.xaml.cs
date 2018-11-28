@@ -52,7 +52,6 @@ namespace SWProjv1
                 mbTitle = "Fail!";
                 mbMessage = "Request Denied\nFill out all fields";
             }
-            MessageBox.Show(mbMessage, mbTitle);
-        }
+		}
     }
 }

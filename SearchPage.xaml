@@ -23,6 +23,7 @@
         <TextBox Grid.Row="1"/>
         <Button Name="search_btn" Content="Search" Click="search_btn_Click" Grid.Row="2"/>
         <ListBox Name="searchItems" Grid.Row="3"/>
+        <Button Name ="CreateButton" Grid.Row="1" Content="New Message" Visibility="Hidden"/>
         <!--Grid Name="searchItem" Grid.Row="3" Grid.Column="1">
             <TextBlock Name="searchText_test" Text="BBBBB"/>
         </-->

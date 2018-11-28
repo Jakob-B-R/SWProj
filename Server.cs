@@ -30,16 +30,18 @@ namespace SWProjv1
         }
         public static void setCommand(String type, String searchTerm)
         {
-            if (type.Equals("Room"))
-                command.CommandText = "SELECT * FROM " + type;
-            else if (type.Equals("Student"))
-                command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID";
+			if (type.Equals("Room"))
+				command.CommandText = "SELECT * FROM " + type;
+			else if (type.Equals("Student"))
+				command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID";
 			else if (type.Equals("Message"))
 				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
-			else if (type.Equals("TempKey"))
-				command.CommandText = "SELECT * FROM TempKey";
-			else if (type.Equals("RAApplication"))
-				command.CommandText = "SELECT * FROM RAApplication";
+			else if (type.Equals("Key"))
+				command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID;";
+			else if (type.Equals("RA Application"))
+				command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID";
+			else
+				command.CommandText = "SELECT 'Uh oh!'";
 		}
 
         public static List<ListBoxItem> runQuery(String type)
@@ -93,14 +95,39 @@ namespace SWProjv1
 							reader.GetString(2).Trim(),
 							reader.GetString(3).Trim(),
 							reader.GetDateTime(4).ToString().Trim(),
-							reader.GetString(8).Trim() + " " +  reader.GetString(9).Trim()
+							reader.GetString(8).Trim() + " " + reader.GetString(9).Trim(),
+							reader.GetString(0)
 							);
-						MessageBox.Show(reader.GetString(8).Trim() + " " + reader.GetString(9).Trim());
 						message.setListBoxItem();
 						results.Add(message.listboxitem);
 						break;
+					case "SWProjv1.RA Application":
+						RAApplicationData rad = new RAApplicationData(
+							reader.GetString(11).Trim() + " " + reader.GetString(12).Trim(),
+							reader.GetBoolean(1),
+							reader.GetBoolean(2),
+							reader.GetInt32(3),
+							reader.GetString(4).Trim()
+							);
+						rad.setListBoxItem();
+						results.Add(rad.listboxitem);
+						break;
+					case "SWProjv1.Key":
+						TempKey key = new TempKey(
+							reader.GetString(8).Trim() + " " + reader.GetString(9).Trim(),
+							reader.GetString(0).Trim(),
+							reader.GetString(13).Trim()
+							);
+						key.setListBoxItem();
+						results.Add(key.listboxitem);
+						
+						break;
+					default:
+						break;
+
+
 				}
-            }
+			}
             reader.Close();
             return results;
         }
