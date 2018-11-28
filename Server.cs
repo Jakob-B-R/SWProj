@@ -31,16 +31,16 @@ namespace SWProjv1
         public static void setCommand(String type, String searchTerm)
         {
 			if (type.Equals("Room"))
-				command.CommandText = "SELECT * FROM " + type;
+				command.CommandText = "SELECT * FROM Room WHERE (building LIKE '" + searchTerm +"%' OR buildingLocation LIKE '" + searchTerm + "%')";
 			else if (type.Equals("Student"))
-				command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID";
+				command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND (User_T.firstName LIKE '"+searchTerm+"%' OR lastName LIKE '"+searchTerm+"%' OR studentID like '"+searchTerm+"%')";
 			else if (type.Equals("Message"))
-				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '"+User.userID+"'";
+				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '"+User.userID+ "' AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
 			//command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
 			else if (type.Equals("Key"))
-				command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID;";
+				command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
 			else if (type.Equals("RA Application"))
-				command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID";
+				command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
 			else
 				command.CommandText = "SELECT 'Uh oh!'";
 		}
@@ -195,6 +195,10 @@ namespace SWProjv1
 			SqlCommand cmd = new SqlCommand("EXEC CreateMessage '"+text2+"','"+ userID +"','"+text1+"'", sql);
 			cmd.ExecuteNonQuery();
 		}
-
+		public static void addAudit(String title, String description)
+		{
+			SqlCommand cmd = new SqlCommand("EXEC addAudit '" + title +"','" + description + "'");
+			cmd.ExecuteNonQuery();
+		}
 	}
 }
