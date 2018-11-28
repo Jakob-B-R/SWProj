@@ -30,6 +30,8 @@ namespace SWProjv1
             if (UserType == 1)//Student
             {
                 Student student = new Student();
+				student.username = username_inp.Text;
+				student.password = password_inp.Text;
                 this.NavigationService.Navigate(new StudentHome(student));
             }
             else if (UserType == 3)
@@ -39,7 +41,10 @@ namespace SWProjv1
             }
             else if (UserType == 2)
             {//Admin
-                this.NavigationService.Navigate(new AdminHome());
+				Admin admin = new Admin();
+				admin.username = username_inp.Text;
+				admin.password = password_inp.Text;
+                this.NavigationService.Navigate(new AdminHome(admin));
             }
             else
             {//Error

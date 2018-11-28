@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace SWProjv1
 {
-    public class User
-    {
-        private String username;
-        private String password;
-        public String firstName { get; set; }
-        public String lastName { get; set; }
-        public String otherName { get; set; }
-        public String DOB { get; set; }
+	public class User
+	{
+		private String username;
+		private String password;
+		public String firstName { get; set; }
+		public String lastName { get; set; }
+		public String otherName { get; set; }
+		public String DOB { get; set; }
+		public static String userID{get; set;}
         public User()
         {
 

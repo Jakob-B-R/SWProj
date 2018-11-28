@@ -52,7 +52,7 @@ namespace SWProjv1
 			TextBox textbox = new TextBox();
 			Grid.SetRow(textbox, 0);
 			Grid.SetColumn(textbox, 0);
-			textbox.TextWrapping = System.Windows.TextWrapping.Wrap;
+			textbox.TextWrapping = TextWrapping.Wrap;
 			textbox.Text = Text;
 			grid.Children.Add(textbox);
 			grid.Children.Add(accept);
@@ -72,6 +72,7 @@ namespace SWProjv1
 
 		private void accept_click(object sender, RoutedEventArgs e)
 		{
+
 			Server.Executer("UPDATE Message SET messageAcknowledge = 1 WHERE messageID = '" + mID +"'");
 		}
 	}

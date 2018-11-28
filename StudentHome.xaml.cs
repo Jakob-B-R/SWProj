@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,24 @@ namespace SWProjv1
             {
                 KeyReview_btn.Visibility = Visibility.Visible;
             }
-        }
+			try
+			{
+				String[] roomData = Server.studentHomeQuery(student);
+				tb3.Text = "Residence: " + roomData[0];
+				tb2.Text = "Room: " + roomData[1];
+				tb4.Text = "Date Entered: " + roomData[2];
+				tb5.Text = "Phone Number: " + roomData[3];
+				tb6.Text = "Mailing Address: " + roomData[4];
 
-        private void KeyRequest_btn_Click(object sender, RoutedEventArgs e)
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show("Error: No Data For This Student");
+			}
+			//TODO parse all useful data from here and add to screen;
+		}
+
+		private void KeyRequest_btn_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new KeyRequest());
         }

@@ -16,8 +16,9 @@ namespace SWProjv1
         public bool isBlacklisted { get; set; }
         public String roommateID { get; set; }
         public String roomID { get; set; }
+		public String username { get; set; }
+		public String password { get; set; }
         public Grid grid;
-        User user;
         public ListBoxItem listboxitem;
         public Student(String studentNum, bool isBlacklisted, String roommateID, String roomID, String firstName, String lastName, String otherName, String username, String password, String DOB) : base(firstName, lastName, otherName, username, password, DOB)
         {

@@ -24,6 +24,7 @@ namespace SWProjv1
     public partial class SearchPage : Page
     {
         String type;
+		String uID;
         public SearchPage(String type)
         {
             try
@@ -37,10 +38,16 @@ namespace SWProjv1
 			this.type = type;
             type_txt.Text = type+"s";
 			if (type == "Message")
+			{
 				CreateButton.Visibility = Visibility.Visible;
+			}
 			else
+			{
+				MessageText.Visibility = Visibility.Hidden;
+				Student_Number.Visibility = Visibility.Hidden;
 				CreateButton.Visibility = Visibility.Hidden;
-
+				Send.Visibility = Visibility.Hidden;
+			}
 		}
 
 		private void search_btn_Click(object sender, RoutedEventArgs e)
@@ -72,6 +79,7 @@ namespace SWProjv1
             {
 
 				Grid searchItem;
+				int maxCount = 4;
 				switch (type)
                 {
                     case "Room":
@@ -81,6 +89,7 @@ namespace SWProjv1
                         searchItem = Student.selectedStudent.grid;
                         break;
 					case "Message":
+						maxCount=8;
 						searchItem = Message.selectedMessage.grid;
 						break;
 					case "Key":
@@ -95,17 +104,49 @@ namespace SWProjv1
                 }
                 Grid.SetColumn(searchItem, 1);
                 Grid.SetRow(searchItem, 3);
-				while (grid.Children.Count > 4)
+				while (grid.Children.Count > maxCount)
 					grid.Children.RemoveAt(grid.Children.Count-1);
 				grid.Children.Add(searchItem);
             }
             catch (Exception) {
 
 			}
-        }
+			MessageText.Visibility = Visibility.Hidden;
+			Student_Number.Visibility = Visibility.Hidden;
+			Send.Visibility = Visibility.Hidden;
+		}
 
 		private void newmessage_click(object sender, RoutedEventArgs e)
 		{
+			MessageText.Visibility = Visibility.Visible;
+			Student_Number.Visibility = Visibility.Visible;
+			Send.Visibility = Visibility.Visible;
+			Grid.SetColumn(Student_Number, 1);
+			Grid.SetRow(Student_Number, 1);
+			Grid.SetColumn(MessageText, 1);
+			Grid.SetRow(MessageText, 3);
+			Grid.SetColumn(Send, 1);
+			Grid.SetRow(Send, 2);
+			while (grid.Children.Count > 8)
+				grid.Children.RemoveAt(grid.Children.Count - 1);
+		}
+		private void Send_Click(object sender, RoutedEventArgs e)
+		{
+			if(MessageText.Text != "Message Text" && Student_Number.Text != "UserNumber")
+			{
+				try
+				{
+					Server.SendMessage(Student_Number.Text, MessageText.Text, User.userID);
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show("Error, Wrong input" + ex.Message);
+				}
+			}
+			else
+			{
+				MessageBox.Show("Error, Inputs invalid");
+			}
 		}
 	}
 }
