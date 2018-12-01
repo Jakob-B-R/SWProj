@@ -18,24 +18,26 @@ namespace SWProjv1
         {
             try
             {
-                sql = new SqlConnection("Data Source =JAKES-LAPTOP\\SQLEXPRESS; Initial Catalog = SEProjectDB ; Integrated Security = SSPI");
+                sql = new SqlConnection("Data Source = JAKES-LAPTOP\\SQLEXPRESS; Initial Catalog = SEProjectDB ; Integrated Security = SSPI");
                 sql.Open();
                 command = sql.CreateCommand();
                 return true;
             }
             catch (Exception e)
             {
-                return false;
+				MessageBox.Show("Error Connecting to Database. Please ensure the Connection String is correct. \n\n" + e.Message);
+				return false;
             }
         }
         public static void setCommand(String type, String searchTerm)
         {
+			command.Parameters.Clear();
 			if (type.Equals("Room"))
-				command.CommandText = "SELECT * FROM Room WHERE (building LIKE '" + searchTerm +"%' OR buildingLocation LIKE '" + searchTerm + "%')";
+				command.CommandText = "SELECT * FROM Room WHERE (building LIKE '" + searchTerm + "%' OR buildingLocation LIKE '" + searchTerm + "%')";
 			else if (type.Equals("Student"))
-				command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND (User_T.firstName LIKE '"+searchTerm+"%' OR lastName LIKE '"+searchTerm+"%' OR studentID like '"+searchTerm+"%')";
+				command.CommandText = "SELECT * FROM Student, User_T WHERE Student.UserID = User_T.UserID AND Student.userID= Student.studentID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%' OR studentID like '" + searchTerm + "%')";
 			else if (type.Equals("Message"))
-				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = '"+User.userID+ "' AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
+				command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID = '" + User.userID + "' AND USer_T.userID = senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
 			//command.CommandText = "SELECT * FROM Message, User_T WHERE messageAcknowledge = 0 AND recieverUserID IN (SELECT recieverUserID FROM Message, Admin WHERE recieverUserID=userID)  AND user_T.userID=Message.senderUserID;";
 			else if (type.Equals("Key"))
 				command.CommandText = "SELECT * FROM Message, User_T, Student WHERE recieverUserID = '000000000000000' AND messageAcknowledge = '0' AND senderUserID = User_T.userID AND Student.userID = Message.senderUserID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
@@ -43,6 +45,7 @@ namespace SWProjv1
 				command.CommandText = "select * from RAApplication,Student,User_T where isAcknowledged = 0 AND RAApplication.studentID = Student.studentID AND Student.userID = User_T.userID AND (User_T.firstName LIKE '" + searchTerm + "%' OR lastName LIKE '" + searchTerm + "%')";
 			else
 				command.CommandText = "SELECT 'Uh oh!'";
+			//command.Parameters.Add(new SqlParameter("@searchTerm", searchTerm));
 		}
 
         public static List<ListBoxItem> runQuery(String type)
@@ -97,7 +100,7 @@ namespace SWProjv1
 							reader.GetString(3).Trim(),
 							reader.GetDateTime(4).ToString().Trim(),
 							reader.GetString(8).Trim() + " " + reader.GetString(9).Trim(),
-							reader.GetString(0)
+							reader.GetInt32(0).ToString()
 							);
 						message.setListBoxItem();
 						results.Add(message.listboxitem);
@@ -192,12 +195,18 @@ namespace SWProjv1
 		}
 		public static void SendMessage(string text1, string text2, string userID)
 		{
-			SqlCommand cmd = new SqlCommand("EXEC CreateMessage '"+text2+"','"+ userID +"','"+text1+"'", sql);
+			//SqlCommand cmd = new SqlCommand("EXEC CreateMessage '"+text2+"','"+ userID +"','"+text1+"'", sql);
+			SqlCommand cmd = new SqlCommand("EXEC CreateMessage @text2,@userID,@text1", sql);
+			cmd.Parameters.Add(new SqlParameter("@text2", text2));
+			cmd.Parameters.Add(new SqlParameter("@text1", text1));
+			cmd.Parameters.Add(new SqlParameter("@userID", userID));
 			cmd.ExecuteNonQuery();
 		}
 		public static void addAudit(String title, String description)
 		{
-			SqlCommand cmd = new SqlCommand("EXEC addAudit '" + title +"','" + description + "'");
+			SqlCommand cmd = new SqlCommand("EXEC addAudit @title,@description");
+			cmd.Parameters.Add(new SqlParameter("@title", title));
+			cmd.Parameters.Add(new SqlParameter("@description", description));
 			cmd.ExecuteNonQuery();
 		}
 	}

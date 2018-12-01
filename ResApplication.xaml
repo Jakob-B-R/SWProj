@@ -21,7 +21,7 @@
                     <TextBlock Text="Name:"/>
                     <TextBox Name="name_inp"/>
                     <TextBlock Text="Student Number:"/>
-                    <TextBox Name="stdNum_inp"/>
+                    <TextBox Name="stdNum_inp2"/>
                     <TextBlock Text="Last Name"/>
                     <TextBox Name="lname_inp"/>
                     <TextBlock Text="Other Name"/>

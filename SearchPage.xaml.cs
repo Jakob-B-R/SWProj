@@ -55,7 +55,7 @@ namespace SWProjv1
 
 			try
 			{
-                Server.setCommand(type, "");
+                Server.setCommand(type, SearchTermBox.Text);
                 List<ListBoxItem> listy = Server.runQuery("SWProjv1." + type);
 				foreach (ListBoxItem lbi in listy)
                 {
@@ -67,7 +67,7 @@ namespace SWProjv1
 			}
 			catch (Exception exceptyone)
             {
-				MessageBox.Show(exceptyone.ToString());
+				MessageBox.Show("ERROR SEARCH BUTTON \n\n\n" + exceptyone.ToString());
 				//searchText_test.Text = exceptyone.ToString();
 			}
         }
@@ -140,12 +140,12 @@ namespace SWProjv1
 				}
 				catch(Exception ex)
 				{
-					MessageBox.Show("Error, Wrong input" + ex.Message);
+					MessageBox.Show("Send Message ErrorError, Wrong input\n\n" + ex.Message);
 				}
 			}
 			else
 			{
-				MessageBox.Show("Error, Inputs invalid");
+				MessageBox.Show("SEND CLICK ERROR: Error, Inputs invalid \n\n");
 			}
 		}
 	}
