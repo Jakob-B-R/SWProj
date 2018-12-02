@@ -33,13 +33,14 @@ namespace SWProjv1
             {
                 mbTitle = "Success!";
                 mbMessage = "Application Successful! :)";
-				Server.Executer("EXEC NewRAApplication '"+stdNum_inp.Text+"'");
+                Server.Executer("EXEC NewRAApplication '" + stdNum_inp.Text + "', '" + essay_inp.Text + "'");
             }
             else
             {
                 mbTitle = "Fail!";
                 mbMessage = "Request Denied\nFill out all fields";
             }
+            MessageBox.Show(mbMessage, mbTitle);
         }
-    }
+	}
 }

@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ResApplication">
-
     <Grid Background="#FFE5E5E5">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,7 +20,7 @@
                     <TextBlock Text="Name:"/>
                     <TextBox Name="name_inp"/>
                     <TextBlock Text="Student Number:"/>
-                    <TextBox Name="stdNum_inp2"/>
+                    <TextBox Name="stdNum_inp"/>
                     <TextBlock Text="Last Name"/>
                     <TextBox Name="lname_inp"/>
                     <TextBlock Text="Other Name"/>

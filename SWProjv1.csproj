@@ -58,25 +58,33 @@
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Audit.cs" />
+    <Compile Include="AuditData.cs" />
+    <Compile Include="Furniture.cs" />
     <Compile Include="KeyRequest.xaml.cs">
       <DependentUpon>KeyRequest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs" />
     <Compile Include="RA.cs" />
     <Compile Include="RAApplication.xaml.cs">
       <DependentUpon>RAApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RAApplicationData.cs" />
     <Compile Include="ResApplication.xaml.cs">
       <DependentUpon>ResApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ResApplicationForm.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentAssignment.cs" />
     <Compile Include="StudentHome.xaml.cs">
       <DependentUpon>StudentHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TempKey.cs" />
     <Compile Include="User.cs" />
     <Page Include="AdminHome.xaml">
       <SubType>Designer</SubType>
